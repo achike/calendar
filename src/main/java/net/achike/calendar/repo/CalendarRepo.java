@@ -8,4 +8,6 @@ import net.achike.calendar.domain.Calendar;
 @Repository
 public interface CalendarRepo extends CrudRepository<Calendar,Integer> {
 
+    Calendar findOneByUsername(String username);
+    
 }

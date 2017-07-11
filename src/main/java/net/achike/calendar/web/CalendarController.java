@@ -2,11 +2,17 @@ package net.achike.calendar.web;
 
 import java.util.List;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import net.achike.calendar.domain.CalendarEvent;
+import net.achike.calendar.service.CalendarService;
 
 /**
  * Implement APIs to allow a user to retrieve the list of events for a day, a
@@ -16,13 +22,36 @@ import net.achike.calendar.domain.CalendarEvent;
  *
  */
 
-@Controller
-@RequestMapping("/event")
+@RestController
 public class CalendarController {
+    
+    @Autowired
+    private CalendarService calendarService;
 
-    @GetMapping("")
+    @GetMapping("/events")
     public List<CalendarEvent> getEvents() {
-        return null;
+        return calendarService.getCalendarEvents();
+    }
+    
+    @GetMapping("/{username}/events")
+    public List<CalendarEvent> getEventsByUser(@PathVariable String username) {
+        return calendarService.getCalendarEvents();
+    }
+    
+    @PostMapping(path="/{username}/events", consumes=MediaType.APPLICATION_JSON_VALUE)
+    public void createCalendarEvent(@PathVariable String username) {
+
+        // TODO Confirm that the current user can view this calendar.
+    }
+    
+    @PutMapping("/{username}/events/{calanderEventId}")
+    public List<CalendarEvent> updateCalendarEvent(@PathVariable String username, @PathVariable int calanderEventId) {
+        return calendarService.getCalendarEvents();
+    }
+    
+    @DeleteMapping("/{username}/events/{calanderEventId}")
+    public void deleteCalendarEvent(@PathVariable String username, @PathVariable int calanderEventId) {
+        calendarService.deleteCalendarEvent(calanderEventId);
     }
     
 }
