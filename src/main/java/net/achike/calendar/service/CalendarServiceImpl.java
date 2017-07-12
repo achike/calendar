@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import net.achike.calendar.domain.Calendar;
 import net.achike.calendar.domain.CalendarEvent;
 import net.achike.calendar.repo.CalendarEventRepo;
 import net.achike.calendar.repo.CalendarRepo;
@@ -38,6 +39,11 @@ public class CalendarServiceImpl implements CalendarService {
     @Override
     public void deleteCalendarEvent(int calanderEventId) {
         calendarEventRepo.delete(calanderEventId);
+    }
+    
+    @Override
+    public Calendar createCalendar(Calendar calendar) {
+        return calendarRepo.save(calendar);
     }
     
 }

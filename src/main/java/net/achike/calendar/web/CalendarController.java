@@ -4,13 +4,16 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import net.achike.calendar.domain.Calendar;
 import net.achike.calendar.domain.CalendarEvent;
 import net.achike.calendar.service.CalendarService;
 
@@ -22,13 +25,14 @@ import net.achike.calendar.service.CalendarService;
  *
  */
 
+@CrossOrigin(origins={"http://localhost:4200","http://calendar.achike.net"})
 @RestController
 public class CalendarController {
     
     @Autowired
     private CalendarService calendarService;
 
-    @GetMapping("/events")
+    @GetMapping(path="/events", produces=MediaType.APPLICATION_JSON_VALUE)
     public List<CalendarEvent> getEvents() {
         return calendarService.getCalendarEvents();
     }
@@ -52,6 +56,13 @@ public class CalendarController {
     @DeleteMapping("/{username}/events/{calanderEventId}")
     public void deleteCalendarEvent(@PathVariable String username, @PathVariable int calanderEventId) {
         calendarService.deleteCalendarEvent(calanderEventId);
+    }
+    
+    
+    @PostMapping(path="/calendar", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+    public void createCalendar(@RequestBody Calendar calendar) {
+
+        calendarService.createCalendar(calendar);
     }
     
 }
