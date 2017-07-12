@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name="calendar")
 public class Calendar implements Serializable {
@@ -32,6 +34,7 @@ public class Calendar implements Serializable {
     private String externalId;
     
     @OneToMany(mappedBy="calendar")
+    @JsonBackReference
     private List<CalendarEvent> events;
 
     public Integer getId() {

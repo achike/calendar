@@ -1,6 +1,7 @@
 package net.achike.calendar.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +24,21 @@ public class CalendarServiceImpl implements CalendarService {
     @Override
     public List<CalendarEvent> getCalendarEvents() {
         
-        LocalDate start = LocalDate.now();
+        List<CalendarEvent> list = new ArrayList<>();
+
+        for(CalendarEvent event : calendarEventRepo.findAll()) {
+            list.add(event);
+        }
         
-        LocalDate end = start.plusWeeks(2);
-        
-        return calendarEventRepo.findByEventDateBetween(start, end);
+        return list;
     }
 
+    @Override
+    public List<CalendarEvent> getEventsByDate(LocalDate startDate, LocalDate endDate) {
+        
+        return calendarEventRepo.findByEventDateBetween(startDate, endDate);
+    }
+    
     @Override
     public List<CalendarEvent> getEventsByUser(String username) {
 

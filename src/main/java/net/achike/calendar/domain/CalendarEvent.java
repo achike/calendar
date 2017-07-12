@@ -7,6 +7,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="calendar_event")
@@ -35,9 +38,11 @@ public class CalendarEvent implements Serializable {
     private String location;
     
     @Column(name="event_date")
+    @Convert(converter = LocalDateConverter.class)
     private LocalDate eventDate;
     
     @Column(name="event_time")
+    @Convert(converter = LocalTimeConverter.class)
     private LocalTime eventTime;
     
     @OneToMany
@@ -45,6 +50,7 @@ public class CalendarEvent implements Serializable {
     private List<Attendee> attendees;
     
     @Column(name="reminder_time")
+    @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime reminderTime;
     
     @Column(name="reminder_sent")
@@ -52,6 +58,7 @@ public class CalendarEvent implements Serializable {
 
     @ManyToOne
     @JoinColumn(name="calendar_id")
+    @JsonManagedReference
     private Calendar calendar;
     
     

@@ -1,5 +1,6 @@
 package net.achike.calendar.web;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.achike.calendar.domain.Calendar;
@@ -31,15 +33,20 @@ public class CalendarController {
     
     @Autowired
     private CalendarService calendarService;
-
+    
     @GetMapping(path="/events", produces=MediaType.APPLICATION_JSON_VALUE)
-    public List<CalendarEvent> getEvents() {
-        return calendarService.getCalendarEvents();
+    public List<CalendarEvent> getEventsByDateQuery(@RequestParam(value="start",required=false) String startDate ) {
+        
+        if(null == startDate) {
+            return calendarService.getCalendarEvents();
+        }
+        
+        return calendarService.getEventsByDate(LocalDate.parse(startDate), LocalDate.parse(startDate));
     }
     
     @GetMapping("/{username}/events")
     public List<CalendarEvent> getEventsByUser(@PathVariable String username) {
-        return calendarService.getCalendarEvents();
+        return calendarService.getEventsByUser(username);
     }
     
     @PostMapping(path="/{username}/events", consumes=MediaType.APPLICATION_JSON_VALUE)
