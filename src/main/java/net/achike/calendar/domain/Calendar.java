@@ -31,7 +31,7 @@ public class Calendar implements Serializable {
     @Column(name="external_id")
     private String externalId;
     
-    @OneToMany
+    @OneToMany(mappedBy="calendar")
     private List<CalendarEvent> events;
 
     public Integer getId() {

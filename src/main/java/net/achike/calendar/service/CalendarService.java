@@ -9,10 +9,12 @@ public interface CalendarService {
     
     List<CalendarEvent> getCalendarEvents();
     
+    
     List<CalendarEvent> getEventsByUser(String username);
-
     void deleteCalendarEvent(int calanderEventId);
     
-    Calendar createCalendar(Calendar calendar);
     
+    
+    Calendar getCalendar(String username);
+    Calendar createCalendar(Calendar calendar);
 }

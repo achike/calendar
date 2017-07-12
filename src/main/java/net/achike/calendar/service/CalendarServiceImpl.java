@@ -46,4 +46,9 @@ public class CalendarServiceImpl implements CalendarService {
         return calendarRepo.save(calendar);
     }
     
+    @Override
+    public Calendar getCalendar(String username) {
+        return calendarRepo.findOneByUsername(username);
+    }
+    
 }

@@ -43,7 +43,7 @@ public class CalendarController {
     }
     
     @PostMapping(path="/{username}/events", consumes=MediaType.APPLICATION_JSON_VALUE)
-    public void createCalendarEvent(@PathVariable String username) {
+    public void createCalendarEvent(@PathVariable String username, @RequestBody CalendarEvent calendarEvent) {
 
         // TODO Confirm that the current user can view this calendar.
     }
@@ -63,6 +63,11 @@ public class CalendarController {
     public void createCalendar(@RequestBody Calendar calendar) {
 
         calendarService.createCalendar(calendar);
+    }
+    
+    @GetMapping(path="/{username}", produces=MediaType.APPLICATION_JSON_VALUE)
+    public Calendar getCalendar(@PathVariable String username) {
+        return calendarService.getCalendar(username);
     }
     
 }

@@ -51,6 +51,7 @@ public class CalendarEvent implements Serializable {
     private boolean reminderSent;
 
     @ManyToOne
+    @JoinColumn(name="calendar_id")
     private Calendar calendar;
     
     
